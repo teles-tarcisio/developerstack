@@ -15,9 +15,32 @@ async function findById(questionId: number) {
   });
 }
 
+async function findAll() {
+  return await prisma.question.findMany();
+}
+
+async function findByIdWithAnswers(questionId: number) {
+  return await prisma.question.findFirst({
+    where: {
+      id: questionId,
+    },
+    select: {
+      id: true,
+      question: true,
+      answers: {
+        select: {
+          answer: true,
+        },
+      },
+    },
+  });
+}
+
 const questionRepository = {
   insert,
   findById,
+  findAll,
+  findByIdWithAnswers,
 };
 
 export default questionRepository;

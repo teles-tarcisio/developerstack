@@ -3,7 +3,7 @@ import questionService  from "../services/questionService.js";
 import answerService from "../services/answerService.js";
 
 import { NewQuestion } from "../repositories/questionRepository.js";
-import { NewAnswer, CreateAnswerData } from "../repositories/answerRepository.js";
+import { NewAnswer } from "../repositories/answerRepository.js";
 
 export async function create(req: Request, res: Response) {
   const question : NewQuestion = req.body;
@@ -24,9 +24,15 @@ export async function answer(req: Request, res: Response) {
 }
 
 export async function get(req: Request, res: Response) {
-  // TODO
+  const allQuestions = await questionService.getAll();
+
+  return res.send(allQuestions);
 }
 
 export async function getById(req: Request, res: Response) {
-  // TODO
+  const questionId : number = parseInt(req.params.id);
+
+  const questionWithAnswers = await questionService.getAnswersToQuestion(questionId);
+
+  return res.send(questionWithAnswers);
 }
