@@ -9,8 +9,15 @@ async function insert(newQuestion: NewQuestion) {
   });
 }
 
+async function findById(questionId: number) {
+  return await prisma.question.findFirst({
+    where: { id: questionId }
+  });
+}
+
 const questionRepository = {
   insert,
+  findById,
 };
 
 export default questionRepository;
